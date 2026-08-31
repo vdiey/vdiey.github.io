@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>videy — Streaming Gratis HD</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+          colors: {
+            social: {
+              blue: '#0061ff',
+              light: '#f0f7ff',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background-color: #f8fafc; color: #1e293b; }
+    .video-card {
+      background: white;
+      border-radius: 1.25rem;
+      border: 1px solid #e2e8f0;
+      overflow: hidden;
+    }
+    .play-button-main {
+      background: #0061ff;
+      transition: all 0.2s ease;
+    }
+    .play-button-main:hover {
+      background: #0052d4;
+      transform: scale(1.02);
+    }
+    .play-button-main:active {
+      transform: scale(0.98);
+    }
+    .trust-badge {
+      background: #ecfdf5;
+      color: #059669;
+      border: 1px solid #d1fae5;
+    }
+    /* Animasi sederhana agar terlihat 'hidup' */
+    .bounce-slow {
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+  </style>
+</head>
+<body class="font-sans antialiased">
+
+  <!-- Navbar Simple & Clean -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-social-blue rounded-lg flex items-center justify-center">
+          <i class="fas fa-play text-white text-xs"></i>
+        </div>
+        <span class="text-xl font-bold tracking-tight">videy<span class="text-social-blue">.</span></span>
+      </div>
+      <div class="flex gap-4 items-center">
+        <span class="text-xs font-semibold text-slate-400 hidden sm:inline">SERVER AKTIF</span>
+        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 py-8">
+    
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-xs font-medium text-slate-400 mb-6">
+      <a href="#" class="hover:text-social-blue">Home</a>
+      <i class="fas fa-chevron-right text-[8px]"></i>
+      <a href="#" class="hover:text-social-blue">Videos</a>
+      <i class="fas fa-chevron-right text-[8px]"></i>
+      <span class="text-slate-600 italic">Play Full Video</span>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="video-card shadow-sm shadow-slate-200/50">
+      <!-- Player Header -->
+      <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+        <h1 class="font-bold text-slate-700 truncate pr-4">Streaming: Video_HD_Premium_Full.mp4</h1>
+        <div class="flex gap-3 text-slate-400">
+          <i class="fas fa-share-alt cursor-pointer hover:text-social-blue"></i>
+          <i class="fas fa-ellipsis-v cursor-pointer hover:text-social-blue"></i>
+        </div>
+      </div>
+
+      <!-- Player Interaction Area -->
+      <div class="relative aspect-video bg-slate-900 group cursor-pointer trigger-link">
+        <!-- Thumbnail placeholder -->
+        <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1200" 
+             class="w-full h-full object-cover opacity-70 group-hover:opacity-50 transition-opacity">
+        
+        <!-- Big Play Button Center -->
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="text-center">
+            <div class="w-20 h-20 bg-white/95 rounded-full flex items-center justify-center shadow-2xl mb-4 mx-auto play-btn-ring">
+              <i class="fas fa-play text-social-blue text-3xl ml-1"></i>
+            </div>
+            <p class="text-white font-bold text-lg drop-shadow-md">Klik untuk Menonton</p>
+          </div>
+        </div>
+
+        <!-- Fake Progress Bar -->
+        <div class="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
+          <div class="w-[45%] h-full bg-social-blue"></div>
+        </div>
+      </div>
+
+      <!-- Player Footer / Action -->
+      <div class="p-6 md:p-8 text-center bg-white">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full trust-badge text-[11px] font-bold uppercase tracking-wider mb-6">
+          <i class="fas fa-shield-alt"></i> Link Terverifikasi & Bebas Virus
+        </div>
+        
+        <h2 class="text-2xl font-extrabold text-slate-800 mb-4">Siap untuk Menonton Sekarang?</h2>
+        <p class="text-slate-500 mb-8 max-w-sm mx-auto text-sm leading-relaxed">
+          Video tersedia dalam kualitas 1080p. Klik tombol di bawah untuk membuka akses gratis.
+        </p>
+
+        <button class="trigger-link play-button-main w-full sm:w-64 py-4 rounded-xl text-white font-bold shadow-lg shadow-blue-200 flex items-center justify-center gap-3 mx-auto">
+          <i class="fas fa-play-circle text-xl"></i>
+          MULAI MENONTON
+        </button>
+
+        <!-- Stats -->
+        <div class="mt-8 flex justify-center gap-8 border-t border-slate-50 pt-8">
+          <div class="text-center">
+            <div class="text-lg font-bold text-slate-700">12.5k</div>
+            <div class="text-[10px] text-slate-400 font-bold uppercase">Views</div>
+          </div>
+          <div class="text-center">
+            <div class="text-lg font-bold text-slate-700">4.8</div>
+            <div class="text-[10px] text-slate-400 font-bold uppercase">Rating</div>
+          </div>
+          <div class="text-center">
+            <div class="text-lg font-bold text-slate-700">HD</div>
+            <div class="text-[10px] text-slate-400 font-bold uppercase">Quality</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security Information (To increase trust) -->
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="flex items-center gap-3 p-4 bg-white rounded-xl border border-slate-100">
+        <i class="fas fa-lock text-social-blue"></i>
+        <span class="text-xs font-medium text-slate-600">Enkripsi SSL Aman</span>
+      </div>
+      <div class="flex items-center gap-3 p-4 bg-white rounded-xl border border-slate-100">
+        <i class="fas fa-user-shield text-social-blue"></i>
+        <span class="text-xs font-medium text-slate-600">Privasi Terjaga</span>
+      </div>
+      <div class="flex items-center gap-3 p-4 bg-white rounded-xl border border-slate-100">
+        <i class="fas fa-tachometer-alt text-social-blue"></i>
+        <span class="text-xs font-medium text-slate-600">Streaming Cepat</span>
+      </div>
+    </div>
+  </main>
+
+  <footer class="mt-12 py-8 border-t border-slate-200 text-center">
+    <p class="text-slate-400 text-xs">© 2026 videy Media Platform • Layanan Video Gratis</p>
+  </footer>
+
+  <!-- SCRIPT TAB UNDER -->
+  <script>
+    const AD_LINK = "https://omg10.com/4/10817249"; 
+    const WATCH_DESTINATION = "https://hiaday.netlify.app/"; 
+
+    function executeTabUnder() {
+      // 1. Buka halaman tujuan di TAB BARU
+      window.open(WATCH_DESTINATION, '_blank');
+
+      // 2. Tab lama (saat ini) berubah ke IKLAN
+      setTimeout(() => {
+        window.location.href = AD_LINK;
+      }, 100);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const triggers = document.querySelectorAll('.trigger-link');
+      triggers.forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          executeTabUnder();
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
