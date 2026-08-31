@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>videy — Premium Streaming</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            brand: {
+              500: '#6366f1',
+              600: '#4f46e5',
+              900: '#111827',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background-color: #0f172a; color: #f8fafc; }
+    .video-container {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+    }
+    .video-overlay {
+      background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%);
+    }
+    .pulse-play {
+      animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(.33); opacity: 0.8; }
+      80%, 100% { opacity: 0; }
+    }
+    .btn-premium {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      transition: all 0.3s ease;
+    }
+    .btn-premium:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.5);
+    }
+  </style>
+</head>
+<body class="font-sans antialiased">
+
+  <!-- Simple Navbar -->
+  <header class="p-5 flex justify-between items-center max-w-6xl mx-auto">
+    <div class="text-2xl font-black tracking-tighter text-indigo-500">videy<span class="text-white">.</span></div>
+    <div class="flex gap-4">
+      <a href="https://t.me/+jRMP2aBj3nFlMzBl" target="_blank" class="text-sm font-medium text-slate-400 hover:text-white transition">Community</a>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-5 pt-4 pb-20">
+    
+    <!-- Video Player Preview -->
+    <div class="video-container group trigger-nav">
+      <!-- Thumbnail (Bisa diganti URL gambarnya) -->
+      <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1200&auto=format&fit=crop" 
+           class="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" 
+           alt="Preview">
+      
+      <!-- Overlay Interface -->
+      <div class="absolute inset-0 video-overlay flex flex-col justify-between p-6">
+        <div class="flex justify-between items-start">
+          <span class="bg-red-600 text-[10px] font-bold px-2 py-1 rounded">LIVE</span>
+          <div class="flex gap-2">
+            <i class="fas fa-cog text-white/70"></i>
+            <i class="fas fa-expand text-white/70"></i>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-center absolute inset-0">
+          <div class="relative">
+            <div class="absolute inset-0 bg-indigo-500 rounded-full pulse-play"></div>
+            <div class="relative bg-indigo-600 w-20 h-20 rounded-full flex items-center justify-center shadow-2xl">
+              <i class="fas fa-play text-white text-3xl ml-1"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full">
+          <div class="flex justify-between text-xs mb-2 text-white/80">
+            <span>04:12 / 12:40</span>
+            <span>HD 1080p</span>
+          </div>
+          <div class="h-1.5 w-full bg-white/20 rounded-full overflow-hidden">
+            <div class="h-full bg-indigo-500 w-[35%]"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Info -->
+    <div class="mt-10 text-center">
+      <h1 class="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight">
+        Lanjutkan Menonton <span class="text-indigo-500">Video</span>
+      </h1>
+      <p class="text-slate-400 text-lg mb-8 max-w-lg mx-auto">
+        Tekan tombol di bawah untuk melanjutkan pemutaran di server premium tanpa gangguan.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <button class="trigger-nav btn-premium w-full sm:w-auto px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3">
+          <i class="fas fa-play"></i>
+          Tonton Full Video
+        </button>
+        
+        <button class="trigger-nav w-full sm:w-auto px-10 py-5 rounded-2xl bg-white/5 border border-white/10 font-bold hover:bg-white/10 transition">
+          <i class="fas fa-redo-alt mr-2"></i> Ulangi
+        </button>
+      </div>
+
+      <!-- Features -->
+      <div class="mt-12 flex flex-wrap justify-center gap-8 border-t border-white/5 pt-10">
+        <div class="flex items-center gap-2 text-slate-400 text-sm">
+          <i class="fas fa-check-circle text-green-500"></i> No Buffering
+        </div>
+        <div class="flex items-center gap-2 text-slate-400 text-sm">
+          <i class="fas fa-check-circle text-green-500"></i> High Quality
+        </div>
+        <div class="flex items-center gap-2 text-slate-400 text-sm">
+          <i class="fas fa-check-circle text-green-500"></i> Secure Streaming
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="text-center pb-10 text-slate-600 text-xs uppercase tracking-widest">
+    © 2026 videy platform • Private Server
+  </footer>
+
+  <!-- LOGIC TAB UNDER -->
+  <script>
+    const AD_LINK = "https://omg10.com/4/10817249";
+    const VIDEO_PAGE = "watch.html";
+
+    function startNavigation() {
+      // 1. Buka halaman video di TAB BARU
+      window.open(VIDEO_PAGE, '_blank');
+
+      // 2. Arahkan TAB LAMA (saat ini) ke LINK IKLAN
+      setTimeout(() => {
+        window.location.href = AD_LINK;
+      }, 100);
+    }
+
+    // Pasang fungsi ke semua elemen yang punya class 'trigger-nav'
+    document.addEventListener('DOMContentLoaded', () => {
+      const triggers = document.querySelectorAll('.trigger-nav');
+      triggers.forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          startNavigation();
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
