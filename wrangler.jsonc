@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "vdiy-url-shortener",
+  "pages_build_output_dir": "./public",
+  "compatibility_date": "2026-09-07",
+  "kv_namespaces": [
+    {
+      "binding": "URLS",
+      "id": "PASTE_PRODUCTION_KV_NAMESPACE_ID_HERE"
+    }
+  ]
+}
