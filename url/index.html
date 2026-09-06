@@ -6,12 +6,8 @@
     <title>Short URL Generator - vDIY</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* --- CSS SAMA SEPERTI INDEX.HTML SEBELUMNYA --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
@@ -21,7 +17,6 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 20px;
         }
-
         .container {
             background: white;
             border-radius: 20px;
@@ -30,34 +25,15 @@
             width: 100%;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            font-size: 28px;
-            color: #333;
-            font-weight: 800;
-        }
-
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { font-size: 28px; color: #333; font-weight: 800; }
         .header h1 span {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        .header p {
-            color: #666;
-            margin-top: 8px;
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
+        .header p { color: #666; margin-top: 8px; font-size: 14px; }
+        .form-group { margin-bottom: 20px; }
         .form-group label {
             display: block;
             font-weight: 600;
@@ -65,7 +41,6 @@
             margin-bottom: 8px;
             font-size: 14px;
         }
-
         .form-group input {
             width: 100%;
             padding: 12px 16px;
@@ -75,17 +50,12 @@
             font-family: 'Inter', sans-serif;
             transition: all 0.3s ease;
         }
-
         .form-group input:focus {
             outline: none;
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
-
-        .form-group input::placeholder {
-            color: #aaa;
-        }
-
+        .form-group input::placeholder { color: #aaa; }
         .url-preview {
             background: #f8f9fa;
             padding: 12px 16px;
@@ -97,16 +67,8 @@
             font-size: 14px;
             word-break: break-all;
         }
-
-        .url-preview .domain {
-            color: #666;
-        }
-
-        .url-preview .short-id {
-            color: #667eea;
-            font-weight: 700;
-        }
-
+        .url-preview .domain { color: #666; }
+        .url-preview .short-id { color: #667eea; font-weight: 700; }
         .url-preview .copy-btn {
             margin-left: auto;
             background: none;
@@ -117,11 +79,7 @@
             padding: 0 8px;
             transition: all 0.3s ease;
         }
-
-        .url-preview .copy-btn:hover {
-            transform: scale(1.1);
-        }
-
+        .url-preview .copy-btn:hover { transform: scale(1.1); }
         .btn-generate {
             width: 100%;
             padding: 14px;
@@ -135,22 +93,16 @@
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
         }
-
         .btn-generate:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
         }
-
-        .btn-generate:active {
-            transform: translateY(0);
-        }
-
+        .btn-generate:active { transform: translateY(0); }
         .btn-generate:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none !important;
         }
-
         .result-box {
             margin-top: 20px;
             padding: 20px;
@@ -158,17 +110,14 @@
             border-radius: 10px;
             display: none;
         }
-
         .result-box.show {
             display: block;
             animation: fadeIn 0.5s ease;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         .result-box .short-url {
             display: flex;
             align-items: center;
@@ -178,7 +127,6 @@
             border-radius: 8px;
             margin-bottom: 15px;
         }
-
         .result-box .short-url input {
             flex: 1;
             border: none;
@@ -188,7 +136,6 @@
             color: #333;
             outline: none;
         }
-
         .result-box .short-url .copy-result {
             background: #667eea;
             color: white;
@@ -201,11 +148,7 @@
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
         }
-
-        .result-box .short-url .copy-result:hover {
-            background: #5a6fd6;
-        }
-
+        .result-box .short-url .copy-result:hover { background: #5a6fd6; }
         .toast {
             position: fixed;
             bottom: 30px;
@@ -221,27 +164,19 @@
             transition: all 0.3s ease;
             pointer-events: none;
         }
-
         .toast.show {
             opacity: 1;
             bottom: 40px;
         }
-
         .info-text {
             text-align: center;
             margin-top: 15px;
             font-size: 12px;
             color: #999;
         }
-
         @media (max-width: 480px) {
-            .container {
-                padding: 24px;
-            }
-
-            .header h1 {
-                font-size: 24px;
-            }
+            .container { padding: 24px; }
+            .header h1 { font-size: 24px; }
         }
     </style>
 </head>
@@ -255,12 +190,7 @@
         <form id="shortenForm">
             <div class="form-group">
                 <label for="longUrl">Masukkan URL Panjang</label>
-                <input 
-                    type="url" 
-                    id="longUrl" 
-                    placeholder="https://contoh.com/artikel-panjang..." 
-                    required
-                >
+                <input type="url" id="longUrl" placeholder="https://contoh.com/artikel-panjang..." required>
             </div>
 
             <div class="url-preview">
@@ -299,7 +229,6 @@
         const copyPreviewBtn = document.getElementById('copyPreviewBtn');
         const toast = document.getElementById('toast');
 
-        // Generate random 5 karakter ID
         function generateShortId() {
             const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
             let id = '';
@@ -309,29 +238,24 @@
             return id;
         }
 
-        // Update preview ID
         function updatePreview() {
             const newId = generateShortId();
             shortIdPreview.textContent = newId;
             return newId;
         }
 
-        // Generate ID awal
         let currentId = updatePreview();
 
-        // Generate ID baru saat hover preview
         shortIdPreview.addEventListener('mouseenter', () => {
             currentId = updatePreview();
         });
 
-        // Copy preview ID
         copyPreviewBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             const id = shortIdPreview.textContent;
             navigator.clipboard.writeText(id).then(() => {
                 showToast('✅ ID tersalin!');
             }).catch(() => {
-                // Fallback
                 const textarea = document.createElement('textarea');
                 textarea.value = id;
                 document.body.appendChild(textarea);
@@ -342,7 +266,6 @@
             });
         });
 
-        // Submit form
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -352,7 +275,6 @@
                 return;
             }
 
-            // Validasi URL
             try {
                 new URL(longUrl);
             } catch {
@@ -364,16 +286,13 @@
             generateBtn.textContent = '⏳ Memproses...';
 
             try {
-                // Generate ID baru setiap submit
                 currentId = generateShortId();
                 shortIdPreview.textContent = currentId;
 
-                // Simpan ke localStorage (simulasi database)
                 const urls = JSON.parse(localStorage.getItem('shortUrls') || '{}');
                 urls[currentId] = longUrl;
                 localStorage.setItem('shortUrls', JSON.stringify(urls));
 
-                // Tampilkan hasil
                 const shortUrl = `https://vdiy.pages.dev/${currentId}`;
                 resultUrl.value = shortUrl;
                 resultBox.classList.add('show');
@@ -388,7 +307,6 @@
             }
         });
 
-        // Copy result
         copyResultBtn.addEventListener('click', () => {
             const url = resultUrl.value;
             if (!url) return;
@@ -402,7 +320,6 @@
             });
         });
 
-        // Toast notification
         function showToast(message) {
             toast.textContent = message;
             toast.classList.add('show');
@@ -412,7 +329,6 @@
             }, 2500);
         }
 
-        // Click on result input to select
         resultUrl.addEventListener('click', () => {
             resultUrl.select();
         });
