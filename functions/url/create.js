@@ -1,55 +1,97 @@
-const ALPHABET="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-const ID_LENGTH=5;
-const MAX_URL_LENGTH=2048;
+const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+const ID_LENGTH = 5;
+const MAX_ATTEMPTS = 10;
 
-function json(data,status=200){
-  return new Response(JSON.stringify(data),{
-    status,headers:{
-      "content-type":"application/json; charset=UTF-8",
-      "cache-control":"no-store"
-    }
-  });
-}
-
-function makeId(){
-  const bytes=new Uint8Array(ID_LENGTH);
+function makeId() {
+  const bytes = new Uint8Array(ID_LENGTH);
   crypto.getRandomValues(bytes);
-  let out="";
-  for(const b of bytes) out+=ALPHABET[b%ALPHABET.length];
-  return out;
+
+  let id = "";
+  for (const byte of bytes) {
+    id += ALPHABET[byte % ALPHABET.length];
+  }
+  return id;
 }
 
-function validUrl(value){
-  if(typeof value!=="string"||!value||value.length>MAX_URL_LENGTH)return false;
-  try{
-    const u=new URL(value);
-    return u.protocol==="http:"||u.protocol==="https:";
-  }catch{return false}
-}
+export async function onRequestPost(context) {
+  const kv = context.env.URLS;
 
-export async function onRequestPost(context){
-  if(!context.env.URLS)return json({error:"KV binding URLS belum dikonfigurasi."},500);
-  const type=context.request.headers.get("content-type")||"";
-  if(!type.toLowerCase().includes("application/json"))return json({error:"Content-Type harus application/json."},415);
+  if (!kv) {
+    return Response.json(
+      { error: "KV binding URLS is not configured." },
+      { status: 500 }
+    );
+  }
 
   let body;
-  try{body=await context.request.json()}catch{return json({error:"JSON tidak valid."},400)}
-
-  const destination=typeof body?.url==="string"?body.url.trim():"";
-  if(!validUrl(destination))return json({error:"URL tidak valid. Gunakan http:// atau https://."},400);
-
-  for(let i=0;i<10;i++){
-    const id=makeId();
-    if(await context.env.URLS.get(id)!==null)continue;
-
-    await context.env.URLS.put(id,destination);
-    const origin=new URL(context.request.url).origin;
-    return json({id,shortUrl:`${origin}/${id}`},201);
+  try {
+    body = await context.request.json();
+  } catch {
+    return Response.json(
+      { error: "Request body must be valid JSON." },
+      { status: 400 }
+    );
   }
-  return json({error:"Tidak bisa mendapatkan ID unik. Coba lagi."},503);
+
+  const destination = typeof body?.destination === "string"
+    ? body.destination.trim()
+    : "";
+
+  if (!destination || destination.length > 2048) {
+    return Response.json(
+      { error: "Destination URL is required and must be at most 2048 characters." },
+      { status: 400 }
+    );
+  }
+
+  let target;
+  try {
+    target = new URL(destination);
+  } catch {
+    return Response.json(
+      { error: "Destination must be a valid URL." },
+      { status: 400 }
+    );
+  }
+
+  if (target.protocol !== "http:" && target.protocol !== "https:") {
+    return Response.json(
+      { error: "Only http:// and https:// destinations are allowed." },
+      { status: 400 }
+    );
+  }
+
+  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+    const id = makeId();
+    const existing = await kv.get(id);
+
+    if (existing === null) {
+      await kv.put(id, target.toString());
+
+      const origin = new URL(context.request.url).origin;
+      return Response.json(
+        {
+          id,
+          shortUrl: `${origin}/${id}`
+        },
+        { status: 201 }
+      );
+    }
+  }
+
+  return Response.json(
+    { error: "Could not generate a unique short URL. Please try again." },
+    { status: 503 }
+  );
 }
 
-export async function onRequest(context){
-  if(context.request.method!=="POST")return json({error:"Method Not Allowed"},405);
-  return onRequestPost(context);
+export async function onRequest(context) {
+  if (context.request.method === "POST") {
+    return onRequestPost(context);
+  }
+
+  return new Response("Method Not Allowed", {
+    status: 405,
+    headers: { Allow: "POST" }
+  });
 }
