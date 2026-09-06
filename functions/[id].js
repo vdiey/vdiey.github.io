@@ -1,19 +1,15 @@
 export async function onRequestGet(context) {
-  const { params, env, request } = context;
+  const { params, env } = context;
   const id = params.id;
 
-  // 1. Ambil data dari KV
+  // Ambil data dari KV
   const longUrl = await env.URL_DB.get(id);
 
   if (longUrl) {
-    // 2. Jika ID ditemukan, redirect ke link asli
+    // Redirect ke link asli
     return Response.redirect(longUrl, 302);
   }
 
-  // 3. JIKA ID TIDAK DITEMUKAN:
-  // Ambil URL dasar (origin) contoh: https://viedey.pages.dev
-  const url = new URL(request.url);
-  
-  // Arahkan (Redirect) ke halaman 404.html yang kita buat tadi
-  return Response.redirect(`${url.origin}/404.html`, 302);
+  // Jika ID tidak ada di database, kirim ke halaman 404 atau balik ke home
+  return new Response("Link tidak ditemukan atau sudah kadaluarsa.", { status: 404 });
 }
