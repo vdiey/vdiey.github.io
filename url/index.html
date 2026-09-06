@@ -3,335 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Short URL Generator - vDIY</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* --- CSS SAMA SEPERTI INDEX.HTML SEBELUMNYA --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
-        }
-        .container {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        .header { text-align: center; margin-bottom: 30px; }
-        .header h1 { font-size: 28px; color: #333; font-weight: 800; }
-        .header h1 span {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .header p { color: #666; margin-top: 8px; font-size: 14px; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 14px;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
-        }
-        .form-group input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        .form-group input::placeholder { color: #aaa; }
-        .url-preview {
-            background: #f8f9fa;
-            padding: 12px 16px;
-            border-radius: 10px;
-            margin: 15px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            word-break: break-all;
-        }
-        .url-preview .domain { color: #666; }
-        .url-preview .short-id { color: #667eea; font-weight: 700; }
-        .url-preview .copy-btn {
-            margin-left: auto;
-            background: none;
-            border: none;
-            color: #667eea;
-            cursor: pointer;
-            font-size: 20px;
-            padding: 0 8px;
-            transition: all 0.3s ease;
-        }
-        .url-preview .copy-btn:hover { transform: scale(1.1); }
-        .btn-generate {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-        }
-        .btn-generate:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-        .btn-generate:active { transform: translateY(0); }
-        .btn-generate:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-        .result-box {
-            margin-top: 20px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            display: none;
-        }
-        .result-box.show {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .result-box .short-url {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: white;
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-        .result-box .short-url input {
-            flex: 1;
-            border: none;
-            background: transparent;
-            font-size: 14px;
-            font-family: 'Inter', sans-serif;
-            color: #333;
-            outline: none;
-        }
-        .result-box .short-url .copy-result {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 6px 16px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-        }
-        .result-box .short-url .copy-result:hover { background: #5a6fd6; }
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #333;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            opacity: 0;
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-        .toast.show {
-            opacity: 1;
-            bottom: 40px;
-        }
-        .info-text {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 12px;
-            color: #999;
-        }
-        @media (max-width: 480px) {
-            .container { padding: 24px; }
-            .header h1 { font-size: 24px; }
-        }
-    </style>
+    <title>Short URL Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>🔗 <span>Short URL</span></h1>
-            <p>Buat link pendek dengan ID 5 karakter</p>
-        </div>
-
-        <form id="shortenForm">
-            <div class="form-group">
-                <label for="longUrl">Masukkan URL Panjang</label>
-                <input type="url" id="longUrl" placeholder="https://contoh.com/artikel-panjang..." required>
-            </div>
-
-            <div class="url-preview">
-                <span class="domain">vdiy.pages.dev/</span>
-                <span class="short-id" id="shortIdPreview">xxxxx</span>
-                <button type="button" class="copy-btn" id="copyPreviewBtn" title="Salin ID">📋</button>
-            </div>
-
-            <button type="submit" class="btn-generate" id="generateBtn">
-                ✨ Generate Short URL
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h1 class="text-2xl font-bold mb-4 text-center">URL Shortener</h1>
+        <div class="space-y-4">
+            <input type="url" id="longUrl" placeholder="Tempel link shopee atau link panjang..." 
+                class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button onclick="generateLink()" 
+                class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                Generate Link
             </button>
-        </form>
-
-        <div class="result-box" id="resultBox">
-            <div class="short-url">
-                <input type="text" id="resultUrl" readonly>
-                <button class="copy-result" id="copyResultBtn">Salin</button>
-            </div>
         </div>
 
-        <div class="info-text">
-            ⚡ ID unik 5 karakter • Gratis • Cepat
+        <div id="result" class="mt-6 hidden">
+            <p class="text-sm text-gray-600">Hasil URL:</p>
+            <div class="flex items-center mt-2">
+                <input type="text" id="shortUrl" readonly 
+                    class="w-full p-2 bg-gray-50 border rounded-l-lg text-blue-600 font-medium">
+                <button onclick="copyLink()" class="bg-gray-200 px-4 py-2 rounded-r-lg hover:bg-gray-300">Copy</button>
+            </div>
         </div>
     </div>
 
-    <div class="toast" id="toast">✅ Tersalin!</div>
-
     <script>
-        const form = document.getElementById('shortenForm');
-        const longUrlInput = document.getElementById('longUrl');
-        const shortIdPreview = document.getElementById('shortIdPreview');
-        const generateBtn = document.getElementById('generateBtn');
-        const resultBox = document.getElementById('resultBox');
-        const resultUrl = document.getElementById('resultUrl');
-        const copyResultBtn = document.getElementById('copyResultBtn');
-        const copyPreviewBtn = document.getElementById('copyPreviewBtn');
-        const toast = document.getElementById('toast');
+        async function generateLink() {
+            const longUrl = document.getElementById('longUrl').value;
+            if (!longUrl) return alert("Isi URL dulu!");
 
-        function generateShortId() {
-            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let id = '';
-            for (let i = 0; i < 5; i++) {
-                id += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return id;
-        }
-
-        function updatePreview() {
-            const newId = generateShortId();
-            shortIdPreview.textContent = newId;
-            return newId;
-        }
-
-        let currentId = updatePreview();
-
-        shortIdPreview.addEventListener('mouseenter', () => {
-            currentId = updatePreview();
-        });
-
-        copyPreviewBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const id = shortIdPreview.textContent;
-            navigator.clipboard.writeText(id).then(() => {
-                showToast('✅ ID tersalin!');
-            }).catch(() => {
-                const textarea = document.createElement('textarea');
-                textarea.value = id;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                showToast('✅ ID tersalin!');
+            const res = await fetch('/api/generate', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ longUrl })
             });
-        });
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+            const data = await res.json();
+            const fullShortUrl = window.location.origin + '/' + data.shortId;
             
-            const longUrl = longUrlInput.value.trim();
-            if (!longUrl) {
-                showToast('⚠️ Masukkan URL terlebih dahulu!');
-                return;
-            }
-
-            try {
-                new URL(longUrl);
-            } catch {
-                showToast('⚠️ URL tidak valid!');
-                return;
-            }
-
-            generateBtn.disabled = true;
-            generateBtn.textContent = '⏳ Memproses...';
-
-            try {
-                currentId = generateShortId();
-                shortIdPreview.textContent = currentId;
-
-                const urls = JSON.parse(localStorage.getItem('shortUrls') || '{}');
-                urls[currentId] = longUrl;
-                localStorage.setItem('shortUrls', JSON.stringify(urls));
-
-                const shortUrl = `https://vdiy.pages.dev/${currentId}`;
-                resultUrl.value = shortUrl;
-                resultBox.classList.add('show');
-
-                showToast('✅ Short URL berhasil dibuat!');
-            } catch (error) {
-                showToast('❌ Gagal membuat short URL!');
-                console.error(error);
-            } finally {
-                generateBtn.disabled = false;
-                generateBtn.textContent = '✨ Generate Short URL';
-            }
-        });
-
-        copyResultBtn.addEventListener('click', () => {
-            const url = resultUrl.value;
-            if (!url) return;
-
-            navigator.clipboard.writeText(url).then(() => {
-                showToast('✅ URL tersalin!');
-            }).catch(() => {
-                resultUrl.select();
-                document.execCommand('copy');
-                showToast('✅ URL tersalin!');
-            });
-        });
-
-        function showToast(message) {
-            toast.textContent = message;
-            toast.classList.add('show');
-            clearTimeout(toast.timeout);
-            toast.timeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2500);
+            document.getElementById('shortUrl').value = fullShortUrl;
+            document.getElementById('result').classList.remove('hidden');
         }
 
-        resultUrl.addEventListener('click', () => {
-            resultUrl.select();
-        });
+        function copyLink() {
+            const copyText = document.getElementById("shortUrl");
+            copyText.select();
+            document.execCommand("copy");
+            alert("Link disalin!");
+        }
     </script>
 </body>
 </html>
