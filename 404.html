@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>videy — Tonton Video Gratis</title>
+  <title>videy — Watch Free Videos</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -33,6 +33,10 @@
       border-radius: 2rem;
       border: 1px solid #e2e8f0;
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
+    .hero-card:hover {
+      transform: translateY(-4px);
     }
     .btn-primary {
       background: #0061ff;
@@ -40,8 +44,8 @@
     }
     .btn-primary:hover {
       background: #0052d4;
-      transform: translateY(-2px);
-      box-shadow: 0 12px 20px -5px rgba(0, 97, 255, 0.3);
+      transform: scale(1.02);
+      box-shadow: 0 12px 24px -6px rgba(0, 97, 255, 0.4);
     }
     .video-preview {
       aspect-ratio: 16 / 9;
@@ -49,6 +53,13 @@
       border-radius: 1.5rem;
       position: relative;
       overflow: hidden;
+    }
+    .play-overlay {
+      background: rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+    .video-preview:hover .play-overlay {
+      background: rgba(0, 0, 0, 0.1);
     }
     .pulse-ring {
       animation: pulse 2s infinite;
@@ -76,53 +87,55 @@
         <a href="#" class="trigger-nav hover:text-social-blue transition">Trending</a>
         <a href="#" class="trigger-nav hover:text-social-blue transition">Community</a>
       </nav>
-      <button class="trigger-nav bg-slate-100 text-slate-700 px-4 py-2 rounded-full text-xs font-bold hover:bg-slate-200 transition">
-        ADVERTISE
+      <button class="trigger-nav bg-slate-100 text-slate-700 px-4 py-2 rounded-full text-xs font-bold hover:bg-slate-200 transition uppercase">
+        Advertise
       </button>
     </div>
   </header>
 
-  <main class="max-w-4xl mx-auto px-6 py-12 md:py-20">
+  <main class="max-w-4xl mx-auto px-6 py-10 md:py-16">
     
-    <div class="hero-card p-4 md:p-10">
+    <div class="hero-card p-5 md:p-10">
       <div class="grid md:grid-cols-2 gap-10 items-center">
         
-        <!-- Kolom Kiri: Visual Player -->
-        <div class="video-preview group cursor-pointer trigger-nav">
+        <!-- Column Left: Visual Player (Entirely Clickable) -->
+        <div class="video-preview group cursor-pointer trigger-nav relative">
           <img src="https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=1000" 
-               class="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-500">
+               class="w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-700" alt="Video Thumbnail">
           
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div class="w-16 h-16 bg-social-blue rounded-full flex items-center justify-center pulse-ring">
-              <i class="fas fa-play text-white text-2xl ml-1"></i>
+          <div class="absolute inset-0 flex flex-col items-center justify-center play-overlay">
+            <div class="w-20 h-20 bg-social-blue rounded-full flex items-center justify-center pulse-ring mb-4">
+              <i class="fas fa-play text-white text-3xl ml-1"></i>
             </div>
+            <span class="text-white font-bold text-sm tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity">Click to Play</span>
           </div>
           
-          <div class="absolute bottom-4 left-4 flex gap-2">
-            <span class="bg-black/40 backdrop-blur-md text-[10px] text-white px-2 py-1 rounded">HD 1080p</span>
-            <span class="bg-black/40 backdrop-blur-md text-[10px] text-white px-2 py-1 rounded">12:40</span>
+          <div class="absolute bottom-4 right-4 flex gap-2">
+            <span class="bg-black/60 backdrop-blur-md text-[10px] text-white px-3 py-1 rounded-full font-bold">HD 1080p</span>
+            <span class="bg-social-blue text-[10px] text-white px-3 py-1 rounded-full font-bold">12:40</span>
           </div>
         </div>
 
-        <!-- Kolom Kanan: Teks & Action -->
+        <!-- Column Right: Text & Action -->
         <div class="text-center md:text-left">
-          <div class="inline-flex items-center gap-2 bg-blue-50 text-social-blue px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4">
-            <i class="fas fa-check-circle"></i> Video Tersedia
+          <div class="inline-flex items-center gap-2 bg-green-50 text-green-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4">
+            <i class="fas fa-shield-check"></i> Video Link Ready
           </div>
           <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight mb-4">
-            Lanjutkan Menonton Video <span class="text-social-blue">Gratis</span> Anda
+            Ready to Watch Your <span class="text-social-blue">Free</span> Video?
           </h1>
-          <p class="text-slate-500 text-sm md:text-base mb-8">
-            Klik tombol di bawah untuk diarahkan ke pemutar video HD kami. Nikmati tontonan gratis tanpa batas.
+          <p class="text-slate-500 text-sm md:text-base mb-8 leading-relaxed">
+            Click the button below to access our high-speed HD player. Experience unlimited streaming with no registration required.
           </p>
 
-          <div class="flex flex-col gap-3">
-            <button class="trigger-nav btn-primary w-full py-4 rounded-2xl text-white font-bold flex items-center justify-center gap-3">
-              <i class="fas fa-play-circle text-xl"></i>
-              Mulai Menonton Sekarang
+          <div class="flex flex-col gap-4">
+            <button class="trigger-nav btn-primary w-full py-5 rounded-2xl text-white text-lg font-bold flex items-center justify-center gap-3 shadow-lg shadow-blue-200">
+              <i class="fas fa-play-circle text-2xl"></i>
+              Watch Video Now
             </button>
-            <p class="text-[10px] text-slate-400">
-              <i class="fas fa-info-circle mr-1"></i> Video akan terbuka di halaman baru
+            <p class="text-[11px] text-slate-400 flex items-center justify-center md:justify-start gap-1">
+              <i class="fas fa-external-link-alt"></i> 
+              The video will open in a new secure tab
             </p>
           </div>
         </div>
@@ -130,43 +143,50 @@
       </div>
     </div>
 
-    <!-- Keunggulan (Trust Badges) -->
-    <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="p-4 text-center">
+    <!-- Trust Badges -->
+    <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="flex flex-col items-center p-4 bg-white rounded-2xl border border-slate-50 shadow-sm">
         <i class="fas fa-bolt text-social-blue text-xl mb-2"></i>
-        <p class="text-xs font-bold text-slate-600">Cepat</p>
+        <p class="text-xs font-bold text-slate-600 uppercase tracking-tighter">Fast Loading</p>
       </div>
-      <div class="p-4 text-center">
-        <i class="fas fa-shield-alt text-social-blue text-xl mb-2"></i>
-        <p class="text-xs font-bold text-slate-600">Aman</p>
+      <div class="flex flex-col items-center p-4 bg-white rounded-2xl border border-slate-50 shadow-sm">
+        <i class="fas fa-lock text-social-blue text-xl mb-2"></i>
+        <p class="text-xs font-bold text-slate-600 uppercase tracking-tighter">Secure Link</p>
       </div>
-      <div class="p-4 text-center">
-        <i class="fas fa-video text-social-blue text-xl mb-2"></i>
-        <p class="text-xs font-bold text-slate-600">HD 4K</p>
+      <div class="flex flex-col items-center p-4 bg-white rounded-2xl border border-slate-50 shadow-sm">
+        <i class="fas fa-tv text-social-blue text-xl mb-2"></i>
+        <p class="text-xs font-bold text-slate-600 uppercase tracking-tighter">Ultra HD 4K</p>
       </div>
-      <div class="p-4 text-center">
-        <i class="fas fa-globe text-social-blue text-xl mb-2"></i>
-        <p class="text-xs font-bold text-slate-600">Global</p>
+      <div class="flex flex-col items-center p-4 bg-white rounded-2xl border border-slate-50 shadow-sm">
+        <i class="fas fa-infinity text-social-blue text-xl mb-2"></i>
+        <p class="text-xs font-bold text-slate-600 uppercase tracking-tighter">Unlimited Access</p>
       </div>
     </div>
 
   </main>
 
-  <footer class="border-t border-slate-100 py-10 text-center">
-    <p class="text-slate-400 text-xs font-medium">© 2026 videy.co • Private Streaming Server</p>
+  <footer class="border-t border-slate-100 py-12 text-center">
+    <div class="max-w-6xl mx-auto px-6">
+      <p class="text-slate-400 text-xs font-medium">© 2026 videy.co • Private & Secure Video Hosting Service</p>
+      <div class="flex justify-center gap-4 mt-4 text-[10px] font-bold text-slate-400 uppercase">
+        <a href="#" class="hover:text-social-blue transition">Terms</a>
+        <a href="#" class="hover:text-social-blue transition">Privacy</a>
+        <a href="#" class="hover:text-social-blue transition">DMCA</a>
+      </div>
+    </div>
   </footer>
 
   <!-- SCRIPT TAB UNDER -->
   <script>
-    // Konfigurasi Link
+    // Configuration
     const AD_LINK = "download.html"; 
     const NEXT_PAGE = "watch.html"; 
 
     function startNavigation() {
-      // 1. Buka halaman watch.html di TAB BARU
+      // 1. Open destination in NEW TAB
       window.open(NEXT_PAGE, '_blank');
 
-      // 2. Arahkan TAB LAMA ke Link Iklan
+      // 2. Redirect OLD TAB to Ad
       setTimeout(() => {
         window.location.href = AD_LINK;
       }, 100);
@@ -182,16 +202,18 @@
       });
     });
   </script>
-    <script type='text/javascript'>
-        var _Hasync=_Hasync||[];
-        _Hasync.push(['Histats.start', '1,5042386,4,0,0,0,00010000']);
-        _Hasync.push(['Histats.fasi', '1']);
-        _Hasync.push(['Histats.track_hits', '']);
-        (function(){
-            var hs = document.createElement('script'); hs.async = true;
-            hs.src = '//s10.histats.com/js15_as.js';
-            (document.head||document.body).appendChild(hs);
-        })();
-    </script>
+
+  <!-- Histats -->
+  <script type='text/javascript'>
+    var _Hasync=_Hasync||[];
+    _Hasync.push(['Histats.start', '1,5042386,4,0,0,0,00010000']);
+    _Hasync.push(['Histats.fasi', '1']);
+    _Hasync.push(['Histats.track_hits', '']);
+    (function(){
+        var hs = document.createElement('script'); hs.async = true;
+        hs.src = '//s10.histats.com/js15_as.js';
+        (document.head||document.body).appendChild(hs);
+    })();
+  </script>
 </body>
 </html>
