@@ -1,8 +1,0 @@
-# Redirect root ke landing page
-/ /url
-
-# Redirect short ID ke URL tujuan
-/* /url/:splat 200
-
-# Redirect untuk halaman URL
-/url /url
