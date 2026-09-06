@@ -177,31 +177,39 @@
   </footer>
 
   <!-- SCRIPT TAB UNDER -->
-  <script>
-    // Configuration
-    const AD_LINK = "download.html"; 
-    const NEXT_PAGE = "watch.html"; 
+<script>
+  // Konfigurasi Path - Gunakan '/' di depan agar file terbaca dari root domain
+  const AD_LINK = "/download.html"; // Halaman yang akan terbuka di tab saat ini (Iklan)
+  const NEXT_PAGE = "/watch.html";  // Halaman tujuan utama yang terbuka di TAB BARU
 
-    function startNavigation() {
-      // 1. Open destination in NEW TAB
-      window.open(NEXT_PAGE, '_blank');
+  function startNavigation() {
+    // 1. Coba buka tab baru dulu
+    const newTab = window.open(NEXT_PAGE, '_blank');
 
-      // 2. Redirect OLD TAB to Ad
+    // 2. Jika gagal buka tab baru (diblokir popup blocker), 
+    // langsung arahkan tab saat ini saja agar link tetap bekerja
+    if (!newTab || newTab.closed || typeof newTab.closed === 'undefined') {
+      window.location.href = NEXT_PAGE;
+    } else {
+      // 3. Jika tab baru berhasil dibuka, baru alihkan tab lama ke link iklan/download
       setTimeout(() => {
         window.location.href = AD_LINK;
-      }, 100);
+      }, 300); // Beri sedikit delay agar browser tidak curiga
     }
+  }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const triggers = document.querySelectorAll('.trigger-nav');
-      triggers.forEach(item => {
-        item.addEventListener('click', (e) => {
-          e.preventDefault();
-          startNavigation();
-        });
+  document.addEventListener('DOMContentLoaded', () => {
+    const triggers = document.querySelectorAll('.trigger-nav');
+    triggers.forEach(item => {
+      item.style.cursor = 'pointer'; // Pastikan kursor pointer
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        startNavigation();
       });
     });
-  </script>
+  });
+</script>
 
   <!-- Histats -->
   <script type='text/javascript'>
