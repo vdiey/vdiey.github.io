@@ -1,5 +1,0 @@
-{
-  "version": 1,
-  "include": ["/url/*", "/*"],
-  "exclude": ["/url/index.html", "/404.html"]
-}
