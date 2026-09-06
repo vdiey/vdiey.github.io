@@ -23,25 +23,36 @@ export default {
       }
     }
 
-    // 2. PRIORITAS: CEK FILE FISIK (watch.html, download.html, dll)
-    // Kita coba ambil filenya dulu dari sistem asset Cloudflare
+    // 2. PRIORITAS: CEK FILE FISIK (watch.html, download.html, url/index.html)
     const asset = await env.ASSETS.fetch(request);
-    
-    // Jika file ditemukan (status 200), langsung tampilkan
     if (asset.status !== 404) {
       return asset;
     }
 
-    // 3. JIKA FILE TIDAK DITEMUKAN, BARU CEK SHORT URL (5 Karakter)
+    // 3. LOGIKA REDIRECT + CEK NEGARA (Hanya untuk ID 5 karakter)
     if (id.length === 5) {
       const longUrl = await env.URL_DB.get(id);
+      
       if (longUrl) {
-        return Response.redirect(longUrl, 301);
+        // Ambil kode negara dari Cloudflare
+        const country = request.cf.country; 
+
+        // JIKA PENGUNJUNG DARI INDONESIA
+        if (country === "ID") {
+          return Response.redirect(longUrl, 301);
+        } else {
+          // JIKA LUAR NEGERI, LEMPAR KE 404
+          const errorPage = await env.ASSETS.fetch(new URL("/404.html", request.url));
+          return new Response(errorPage.body, {
+            ...errorPage,
+            status: 404,
+            headers: { "Content-Type": "text/html" }
+          });
+        }
       }
-      // Jika 5 karakter tapi tidak ada di KV, biarkan lanjut ke bawah untuk kena 404.html
     }
 
-    // 4. JIKA SEMUA GAGAL, TAMPILKAN LANDING PAGE 404 (Untuk link asal-asalan)
+    // 4. JIKA ASAL KETIK (BUKAN 5 KARAKTER) & FILE TIDAK ADA
     const errorPage = await env.ASSETS.fetch(new URL("/404.html", request.url));
     return new Response(errorPage.body, {
       ...errorPage,
