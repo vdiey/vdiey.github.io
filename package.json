@@ -1,9 +1,5 @@
 {
-  "name":"vdiy-url-shortener",
-  "private":true,
-  "scripts":{
-    "dev":"wrangler pages dev public",
-    "deploy":"wrangler pages deploy public --project-name vdiy"
-  },
-  "devDependencies":{"wrangler":"^4.0.0"}
+  "name": "vdiy",
+  "private": true,
+  "version": "1.0.0"
 }
